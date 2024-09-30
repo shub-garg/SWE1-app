@@ -16,8 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.http import HttpResponse
+
+def redirect_message(request):
+    # Display a simple message with a clickable link to /polls/
+    return HttpResponse(
+        '<h1>Welcome!</h1><h5 style="font-size: 20px;">Please go to the <a href="/polls/">polls page</a>.</h5>'
+    )
 
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
+    path('', redirect_message),
 ]
