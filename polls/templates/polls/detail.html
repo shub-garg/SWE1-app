@@ -16,30 +16,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ question.question_text }}</title>
-    <!-- Custom CSS for styling -->
     <style>
         body {
-            background-color: #f0f8ff; /* Soft sky blue background */
+            background-color: #f0f8ff;
             font-family: 'Arial', sans-serif;
         }
 
         .container {
-            background-color: #fff; /* White background for form */
+            background-color: #fff;
             max-width: 600px;
             margin: 50px auto;
             padding: 30px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
 
         h1 {
-            color: #333; /* Dark text for question */
+            color: #333;
             text-align: center;
             font-size: 2rem;
             margin-bottom: 20px;
         }
 
-        /* Styling the fieldset */
         fieldset {
             border: 1px solid #ccc;
             padding: 20px;
@@ -49,26 +47,24 @@
 
         legend {
             font-size: 1.5rem;
-            color: #007bff; /* Bootstrap blue for heading */
+            color: #007bff;
             font-weight: bold;
         }
 
-        /* Radio buttons and labels */
         input[type="radio"] {
             margin-right: 10px;
-            accent-color: #28a745; /* Green radio button color */
+            accent-color: #28a745;
         }
 
         label {
             font-size: 1.1rem;
-            color: #555; /* Medium gray for labels */
+            color: #555; 
             display: block;
         }
 
-        /* Styling the submit button */
         input[type="submit"] {
-            background-color: #007bff; /* Blue background */
-            color: #fff; /* White text */
+            background-color: #007bff;
+            color: #fff;
             border: none;
             padding: 10px 20px;
             font-size: 1rem;
@@ -80,12 +76,11 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3;
         }
 
-        /* Error message styling */
         .error-message {
-            color: #dc3545; /* Red color for error message */
+            color: #dc3545;
             font-size: 1rem;
             margin-bottom: 20px;
         }
@@ -103,12 +98,10 @@
             <fieldset>
                 <legend><h1>{{ question.question_text }}</h1></legend>
 
-                <!-- Error message -->
                 {% if error_message %}
                     <p class="error-message"><strong>{{ error_message }}</strong></p>
                 {% endif %}
 
-                <!-- Poll choices with radio buttons -->
                 {% for choice in question.choice_set.all %}
                 <choice>
                     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
@@ -117,7 +110,6 @@
                     {% endfor %}
             </fieldset>
 
-            <!-- Submit button -->
             <input type="submit" value="Vote">
         </form>
     </div>

@@ -14,62 +14,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ question.question_text }}</title>
-    <!-- Custom CSS for styling -->
     <style>
         body {
-            background-color: #f0f8ff; /* Soft sky blue background */
+            background-color: #f0f8ff;
             font-family: 'Arial', sans-serif;
         }
 
         .container {
-            background-color: #fff; /* White background for the results card */
+            background-color: #fff;
             max-width: 600px;
             margin: 50px auto;
             padding: 30px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
 
         h1 {
-            color: #333; /* Dark text for the question */
+            color: #333;
             text-align: center;
             font-size: 2rem;
             margin-bottom: 20px;
         }
 
-        /* List of choices */
         ul {
-            list-style: none; /* Remove default bullets */
+            list-style: none;
             padding: 0;
         }
 
-        /* Individual choice styling */
         li {
-            background-color: #e9f5fb; /* Light blue background for choices */
+            background-color: #e9f5fb;
             padding: 15px;
             margin-bottom: 10px;
-            border-radius: 5px; /* Rounded corners for list items */
+            border-radius: 5px;
             display: flex;
-            justify-content: space-between; /* Align text and votes */
+            justify-content: space-between;
             font-size: 1.2rem;
             color: #333;
         }
 
-        /* Styling for the vote count */
         .votes {
             font-weight: bold;
-            background-color: #007bff; /* Blue background for votes */
+            background-color: #007bff;
             color: white;
             padding: 5px 10px;
             border-radius: 5px;
         }
 
-        /* "Vote again" link */
         .vote-again {
             display: inline-block;
             margin-top: 20px;
             padding: 10px 20px;
-            background-color: #28a745; /* Green background */
+            background-color: #28a745;
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -79,7 +74,7 @@
         }
 
         .vote-again:hover {
-            background-color: #218838; /* Darker green on hover */
+            background-color: #218838;
         }
     </style>
 </head>
@@ -96,7 +91,6 @@
             {% endfor %}
         </ul>
 
-        <!-- Vote again link -->
         <a href="{% url 'polls:detail' question.id %}" class="vote-again">Vote again?</a>
     </div>
 </body>
