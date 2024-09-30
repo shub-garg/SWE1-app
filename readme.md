@@ -99,11 +99,11 @@ Follow the prompts to create a username, email, and password.
 
 3. **Migrate the Database**
 
-If you haven't done so already, apply the database migrations to set up the initial database schema:
+   If you haven't done so already, apply the database migrations to set up the initial database schema:
 
-```bash
-python manage.py migrate
-```
+   ```bash
+   python manage.py migrate
+   ```
 
 4. **Run the Development Server**
 
@@ -128,9 +128,9 @@ You should now see your Django poll application up and running!
 
    To manage polls, users, and other data, you can access the Django admin panel by navigating to:
 
-  ```bash
-  http://127.0.0.1:8000/admin/
-  ```
+   ```bash
+     http://127.0.0.1:8000/admin/
+     ```
 
 ## Deploying to AWS Elastic Beanstalk
 
