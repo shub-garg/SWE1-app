@@ -2,6 +2,8 @@
 
 A simple web application to create and vote on polls, built with Django. This project is a step-by-step implementation following Django's official tutorial series.
 
+![ScreenRecording2024-09-30at5 34 31AM-ezgif com-optimize](https://github.com/user-attachments/assets/d1d1a32a-2415-4158-97b4-3b6563cdd0dd)
+
 ## Table of Contents
 
 - [Features](#features)
@@ -231,7 +233,3 @@ For any issues, questions, or feedback, feel free to reach out:
 - Email me at [shubgarg17@gmail.com](mailto:shubgarg17@gmail.com) for any direct inquiries.
 
 ---
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
