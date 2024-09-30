@@ -1,0 +1,125 @@
+<!-- <form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+</form> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ question.question_text }}</title>
+    <!-- Custom CSS for styling -->
+    <style>
+        body {
+            background-color: #f0f8ff; /* Soft sky blue background */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            background-color: #fff; /* White background for form */
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border-radius: 10px; /* Rounded corners */
+        }
+
+        h1 {
+            color: #333; /* Dark text for question */
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Styling the fieldset */
+        fieldset {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        legend {
+            font-size: 1.5rem;
+            color: #007bff; /* Bootstrap blue for heading */
+            font-weight: bold;
+        }
+
+        /* Radio buttons and labels */
+        input[type="radio"] {
+            margin-right: 10px;
+            accent-color: #28a745; /* Green radio button color */
+        }
+
+        label {
+            font-size: 1.1rem;
+            color: #555; /* Medium gray for labels */
+            display: block;
+        }
+
+        /* Styling the submit button */
+        input[type="submit"] {
+            background-color: #007bff; /* Blue background */
+            color: #fff; /* White text */
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: #dc3545; /* Red color for error message */
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        choice {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend><h1>{{ question.question_text }}</h1></legend>
+
+                <!-- Error message -->
+                {% if error_message %}
+                    <p class="error-message"><strong>{{ error_message }}</strong></p>
+                {% endif %}
+
+                <!-- Poll choices with radio buttons -->
+                {% for choice in question.choice_set.all %}
+                <choice>
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                </choice>
+                    {% endfor %}
+            </fieldset>
+
+            <!-- Submit button -->
+            <input type="submit" value="Vote">
+        </form>
+    </div>
+</body>
+</html>

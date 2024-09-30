@@ -1,0 +1,103 @@
+<!-- <h1>{{ question.question_text }}</h1>
+
+<ul>
+    {% for choice in question.choice_set.all %}
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ question.question_text }}</title>
+    <!-- Custom CSS for styling -->
+    <style>
+        body {
+            background-color: #f0f8ff; /* Soft sky blue background */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            background-color: #fff; /* White background for the results card */
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border-radius: 10px; /* Rounded corners */
+        }
+
+        h1 {
+            color: #333; /* Dark text for the question */
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* List of choices */
+        ul {
+            list-style: none; /* Remove default bullets */
+            padding: 0;
+        }
+
+        /* Individual choice styling */
+        li {
+            background-color: #e9f5fb; /* Light blue background for choices */
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px; /* Rounded corners for list items */
+            display: flex;
+            justify-content: space-between; /* Align text and votes */
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        /* Styling for the vote count */
+        .votes {
+            font-weight: bold;
+            background-color: #007bff; /* Blue background for votes */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        /* "Vote again" link */
+        .vote-again {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745; /* Green background */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .vote-again:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ question.question_text }}</h1>
+
+        <ul>
+            {% for choice in question.choice_set.all %}
+                <li>
+                    {{ choice.choice_text }}
+                    <span class="votes">{{ choice.votes }} vote{{ choice.votes|pluralize }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Vote again link -->
+        <a href="{% url 'polls:detail' question.id %}" class="vote-again">Vote again?</a>
+    </div>
+</body>
+</html>
