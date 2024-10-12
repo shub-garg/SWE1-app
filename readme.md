@@ -6,7 +6,6 @@ A simple web application to create and vote on polls, built with Django. This pr
 
 ## Table of Contents
 
-
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
