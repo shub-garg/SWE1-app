@@ -1,0 +1,10 @@
+[run]
+branch = True
+source = polls
+
+[report]
+omit =
+    */migrations/*
+    */tests/*
+    manage.py
+    
