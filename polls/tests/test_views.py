@@ -1,103 +1,85 @@
-import pytest
+from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 from polls.models import Question, Choice
 
+class PollsTests(TestCase):
 
-@pytest.fixture
-def create_question(db):
-    """Fixture to create a question."""
-    def make_question(question_text, days):
+    def create_question(self, question_text, days):
         """
-        Create a question with the given `question_text` and publish the
-        given number of `days` offset to now (negative for questions published
-        in the past, positive for questions that have yet to be published).
+        Helper method to create a question with the given `question_text` and 
+        publish the given number of `days` offset to now 
+        (negative for past, positive for future).
         """
         time = timezone.now() + timezone.timedelta(days=days)
         return Question.objects.create(question_text=question_text, pub_date=time)
-    return make_question
 
-
-@pytest.fixture
-def create_choice(db):
-    """Fixture to create a choice."""
-    def make_choice(question, choice_text):
+    def create_choice(self, question, choice_text):
+        """
+        Helper method to create a choice for a question.
+        """
         return Choice.objects.create(question=question, choice_text=choice_text, votes=0)
-    return make_choice
 
+    def test_index_view(self):
+        """Test the index view to ensure it shows the last 5 questions."""
+        # Create 6 questions, only 5 should be displayed in the latest list
+        for i in range(6):
+            self.create_question(f"Question {i}", days=-i)
 
-@pytest.mark.django_db
-def test_index_view(client, create_question):
-    """Test the index view to ensure it shows the last 5 questions."""
-    # Create 6 questions, only 5 should be displayed in the latest list
-    for i in range(6):
-        create_question(f"Question {i}", days=-i)
+        response = self.client.get(reverse('polls:index'))
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('latest_question_list', response.context)
+        self.assertEqual(len(response.context['latest_question_list']), 5)
+        self.assertContains(response, "Question 0")
 
-    response = client.get(reverse('polls:index'))
-    
-    assert response.status_code == 200
-    assert 'latest_question_list' in response.context
-    assert len(response.context['latest_question_list']) == 5
-    assert b"Question 0" in response.content
+    def test_detail_view(self):
+        """Test the detail view for a specific question."""
+        question = self.create_question("Test Question", days=-1)
 
+        url = reverse('polls:detail', args=(question.id,))
+        response = self.client.get(url)
 
-@pytest.mark.django_db
-def test_detail_view(client, create_question):
-    """Test the detail view for a specific question."""
-    question = create_question("Test Question", days=-1)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('question', response.context)
+        self.assertEqual(response.context['question'], question)
+        self.assertContains(response, "Test Question")
 
-    url = reverse('polls:detail', args=(question.id,))
-    response = client.get(url)
+    def test_results_view(self):
+        """Test the results view for a specific question."""
+        question = self.create_question("Test Question", days=-1)
 
-    assert response.status_code == 200
-    assert 'question' in response.context
-    assert response.context['question'] == question
-    assert b"Test Question" in response.content
+        url = reverse('polls:results', args=(question.id,))
+        response = self.client.get(url)
 
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('question', response.context)
+        self.assertEqual(response.context['question'], question)
+        self.assertContains(response, "Test Question")
 
-@pytest.mark.django_db
-def test_results_view(client, create_question):
-    """Test the results view for a specific question."""
-    question = create_question("Test Question", days=-1)
+    def test_vote_view(self):
+        """Test voting on a question."""
+        question = self.create_question("Test Question", days=-1)
+        choice = self.create_choice(question, "Test Choice")
 
-    url = reverse('polls:results', args=(question.id,))
-    response = client.get(url)
+        # Post a vote for the created choice
+        response = self.client.post(reverse('polls:vote', args=(question.id,)), {'choice': choice.id})
 
-    assert response.status_code == 200
-    assert 'question' in response.context
-    assert response.context['question'] == question
-    assert b"Test Question" in response.content
+        # After voting, should redirect to results page
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('polls:results', args=(question.id,)))
 
+        # Refresh choice from db to check if vote was incremented
+        choice.refresh_from_db()
+        self.assertEqual(choice.votes, 1)
 
-@pytest.mark.django_db
-def test_vote_view(client, create_question, create_choice):
-    """Test voting on a question."""
-    question = create_question("Test Question", days=-1)
-    choice = create_choice(question, "Test Choice")
+    def test_vote_view_invalid_choice(self):
+        """Test voting with an invalid choice."""
+        question = self.create_question("Test Question", days=-1)
 
-    # Post a vote for the created choice
-    response = client.post(reverse('polls:vote', args=(question.id,)), {'choice': choice.id})
+        # Post a vote with an invalid choice id
+        response = self.client.post(reverse('polls:vote', args=(question.id,)), {'choice': 999})
 
-    # After voting, should redirect to results page
-    assert response.status_code == 302
-    assert response.url == reverse('polls:results', args=(question.id,))
-
-    # Refresh choice from db to check if vote was incremented
-    choice.refresh_from_db()
-    assert choice.votes == 1
-
-
-@pytest.mark.django_db
-def test_vote_view_invalid_choice(client, create_question):
-    """Test voting with an invalid choice."""
-    question = create_question("Test Question", days=-1)
-
-    # Post a vote with an invalid choice id
-    response = client.post(reverse('polls:vote', args=(question.id,)), {'choice': 999})
-
-    # Print response content to inspect it
-    print(response.content)
-
-    assert response.status_code == 200  # Should redisplay the form
-    # Adjust the assertion to match the HTML-encoded error message
-    assert b"You didn&#x27;t select a choice." in response.content
+        # Check if the form is redisplayed with an error message
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "You didn&#x27;t select a choice.")

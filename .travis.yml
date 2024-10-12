@@ -12,7 +12,13 @@ install:
 # Apply migrations and run tests
 script:
   - python manage.py migrate
-  - pytest
+  - coverage run --source=polls manage.py test  # Run tests and measure coverage
+  - coverage report  # Print coverage report to the console
+  - black --check .
+  - flake8
+
+after_success:
+  - coveralls  # Submit coverage report to Coveralls
 
 # Deployment to Elastic Beanstalk
 deploy:
