@@ -1,6 +1,6 @@
 language: python
 python:
-  - "3.10"  # Specify the Python version you want to use
+  - "3.9"  # Specify the Python version you want to use
 
 env:
   global:
