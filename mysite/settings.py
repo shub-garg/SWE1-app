@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['polls-dev2.us-east-1.elasticbeanstalk.com']
 
-
+ 
 # Application definition
 
 INSTALLED_APPS = [
