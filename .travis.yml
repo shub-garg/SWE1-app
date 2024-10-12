@@ -20,6 +20,10 @@ script:
 after_success:
   - coveralls  # Submit coverage report to Coveralls
 
+branches:
+  only:
+    - master
+
 # Deployment to Elastic Beanstalk
 deploy:
   provider: elasticbeanstalk
