@@ -1,25 +1,33 @@
 language: python
 python:
-  - "3.9"
+  - "3.9"  # Use Python 3.9, you can change this if you want
 
 # Install dependencies
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -y sqlite3 libsqlite3-dev  # Install the latest version of SQLite
-  - sqlite3 --version  # Check the installed version to ensure it meets Django's requirements
+  - sudo apt-get install -y libsqlite3-dev wget  # Install necessary libraries and tools
+  - wget https://www.sqlite.org/2020/sqlite-autoconf-3330000.tar.gz  # Download SQLite 3.33.0
+  - tar xzf sqlite-autoconf-3330000.tar.gz
+  - cd sqlite-autoconf-3330000
+  - ./configure
+  - make
+  - sudo make install
+  - sqlite3 --version  # Check that the correct version is installed
+  - cd ..
 
 # Install Python dependencies
 install:
   - pip install -U pip
   - pip install -r requirements.txt
 
-# Run migrations and tests
+# Set up the environment and run migrations
 before_script:
   - python manage.py migrate  # Apply migrations for testing
 
+# Run tests
 script:
   - pytest  # Run tests using pytest
 
-# Cache pip for faster subsequent builds
+# Optionally cache pip dependencies to speed up builds
 cache:
   pip: true
