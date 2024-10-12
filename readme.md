@@ -1,4 +1,5 @@
 [![Build Status](https://app.travis-ci.com/shub-garg/SWE1-app.svg?token=DxuCsKDqE3cxqKSyCKjn&branch=master)](https://app.travis-ci.com/shub-garg/SWE1-app)
+[![Coverage Status](https://coveralls.io/repos/github/shub-garg/SWE1-app/badge.svg?branch=master)](https://coveralls.io/github/shub-garg/SWE1-app?branch=master)
 
 # Django Poll Application
 
