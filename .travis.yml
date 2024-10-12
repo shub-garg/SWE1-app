@@ -2,6 +2,9 @@ language: python
 python:
   - "3.9"
 
+dist: focal  # Use Ubuntu 20.04 (which has SQLite 3.31.1 by default)
+
+
 # Install SQLite from source and use it
 # before_install:
 #   - sudo apt-get update
@@ -22,10 +25,10 @@ install:
   - pip install -U pip
   - pip install -r requirements.txt
 
-# Apply migrations and run tests
-# script:
-#   - python manage.py migrate
-#   - pytest
+Apply migrations and run tests
+script:
+  - python manage.py migrate
+  - pytest
 
 # Deployment to Elastic Beanstalk
 deploy:
