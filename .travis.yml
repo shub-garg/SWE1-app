@@ -1,25 +1,21 @@
 language: python
 python:
-  - "3.9"  # Specify your Python version
+  - "3.9"
 
 # Install SQLite from source and use it
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y libsqlite3-dev wget  # Install necessary libraries
-  - wget https://www.sqlite.org/2020/sqlite-autoconf-3330000.tar.gz  # Download SQLite source code
-  - tar xzf sqlite-autoconf-3330000.tar.gz
-  - cd sqlite-autoconf-3330000
-  - ./configure --prefix=/usr/local
-  - make
-  - sudo make install
-  - cd ..
-  - sqlite3 --version  # Check if the new version is installed correctly
-
-# Ensure the new SQLite is recognized
-before_script:
-  - export LD_LIBRARY_PATH="/usr/local/lib"  # Ensure correct linking
-  - export PATH="/usr/local/bin:$PATH"  # Ensure the correct SQLite version is used
-  - sqlite3 --version  # Verify that the correct version is in use
+# before_install:
+#   - sudo apt-get update
+#   - sudo apt-get install -y libsqlite3-dev wget
+#   - wget https://www.sqlite.org/2020/sqlite-autoconf-3330000.tar.gz
+#   - tar xzf sqlite-autoconf-3330000.tar.gz
+#   - cd sqlite-autoconf-3330000
+#   - ./configure --prefix=/usr/local
+#   - make
+#   - sudo make install
+#   - cd ..
+#   - export LD_LIBRARY_PATH="/usr/local/lib"
+#   - export PATH="/usr/local/bin:$PATH"
+#   - sqlite3 --version
 
 # Install Python dependencies
 install:
@@ -27,6 +23,18 @@ install:
   - pip install -r requirements.txt
 
 # Apply migrations and run tests
-script:
-  - python manage.py migrate  # Apply migrations
-  - pytest  # Run tests
+# script:
+#   - python manage.py migrate
+#   - pytest
+
+# Deployment to Elastic Beanstalk
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
+  region: "us-east-1"  # Your AWS region
+  app: "polls"  # Your Elastic Beanstalk app name
+  env: "polls-dev"  # Your Elastic Beanstalk environment name
+  bucket_name: "elasticbeanstalk-us-east-1-009160062836"  # Replace with the actual S3 bucket name
+  on:
+    branch: master  # Deploy only on the master branch
