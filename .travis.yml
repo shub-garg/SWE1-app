@@ -34,7 +34,6 @@ deploy:
   env: "polls-dev"  # Your Elastic Beanstalk environment name
   bucket_name: "elasticbeanstalk-us-east-1-009160062836"  # Replace with the actual S3 bucket name
   on:
-    branch: 
-      only: 
-        - master
+    branch: master
+    tags: true
   # Deploy only on the master branch
