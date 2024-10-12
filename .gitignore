@@ -6,3 +6,5 @@
 mysite/mysite/__pycache__
 mysite/__pycache__/*
 polls/__pycache__/*
+polls/tests/__pycache__/*
+polls/migrations/*

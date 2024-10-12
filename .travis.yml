@@ -1,0 +1,25 @@
+language: python
+python:
+  - "3.10"  # Specify the Python version you want to use
+
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE=mysite.settings  # Set the settings module for Django
+    - PYTHONPATH=./  # Add your project to the Python path
+    - PIP_DISABLE_PIP_VERSION_CHECK=1  # Disable pip version check for speed improvement
+
+before_install:
+  - pip install -U pip  # Upgrade pip to the latest version
+
+install:
+  - pip install -r requirements.txt  # Install your dependencies
+
+before_script:
+  - python manage.py migrate  # Apply migrations for testing
+
+script:
+  - pytest  # Run tests using pytest
+
+# Optionally add this if you want to cache dependencies for faster builds
+cache:
+  pip: true
