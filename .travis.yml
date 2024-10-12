@@ -1,25 +1,25 @@
 language: python
 python:
-  - "3.9"  # Specify the Python version you want to use
+  - "3.9"
 
-env:
-  global:
-    - DJANGO_SETTINGS_MODULE=mysite.settings  # Set the settings module for Django
-    - PYTHONPATH=./  # Add your project to the Python path
-    - PIP_DISABLE_PIP_VERSION_CHECK=1  # Disable pip version check for speed improvement
-
+# Install dependencies
 before_install:
-  - pip install -U pip  # Upgrade pip to the latest version
+  - sudo apt-get update
+  - sudo apt-get install -y sqlite3 libsqlite3-dev  # Install the latest version of SQLite
+  - sqlite3 --version  # Check the installed version to ensure it meets Django's requirements
 
+# Install Python dependencies
 install:
-  - pip install -r requirements.txt  # Install your dependencies
+  - pip install -U pip
+  - pip install -r requirements.txt
 
+# Run migrations and tests
 before_script:
   - python manage.py migrate  # Apply migrations for testing
 
 script:
   - pytest  # Run tests using pytest
 
-# Optionally add this if you want to cache dependencies for faster builds
+# Cache pip for faster subsequent builds
 cache:
   pip: true
