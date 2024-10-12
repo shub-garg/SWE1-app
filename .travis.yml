@@ -4,22 +4,6 @@ python:
 
 dist: focal  # Use Ubuntu 20.04 (which has SQLite 3.31.1 by default)
 
-
-# Install SQLite from source and use it
-# before_install:
-#   - sudo apt-get update
-#   - sudo apt-get install -y libsqlite3-dev wget
-#   - wget https://www.sqlite.org/2020/sqlite-autoconf-3330000.tar.gz
-#   - tar xzf sqlite-autoconf-3330000.tar.gz
-#   - cd sqlite-autoconf-3330000
-#   - ./configure --prefix=/usr/local
-#   - make
-#   - sudo make install
-#   - cd ..
-#   - export LD_LIBRARY_PATH="/usr/local/lib"
-#   - export PATH="/usr/local/bin:$PATH"
-#   - sqlite3 --version
-
 # Install Python dependencies
 install:
   - pip install -U pip
