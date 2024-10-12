@@ -35,5 +35,4 @@ deploy:
   bucket_name: "elasticbeanstalk-us-east-1-009160062836"  # Replace with the actual S3 bucket name
   on:
     branch: master
-    tags: true
   # Deploy only on the master branch
