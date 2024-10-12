@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/shub-garg/SWE1-app.svg?token=DxuCsKDqE3cxqKSyCKjn&branch=master)](https://app.travis-ci.com/shub-garg/SWE1-app)
+
 # Django Poll Application
 
 A simple web application to create and vote on polls, built with Django. This project is a step-by-step implementation following Django's official tutorial series.
