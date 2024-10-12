@@ -1,33 +1,32 @@
 language: python
 python:
-  - "3.9"  # Use Python 3.9, you can change this if you want
+  - "3.9"  # Specify your Python version
 
-# Install dependencies
+# Install SQLite from source and use it
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -y libsqlite3-dev wget  # Install necessary libraries and tools
-  - wget https://www.sqlite.org/2020/sqlite-autoconf-3330000.tar.gz  # Download SQLite 3.33.0
+  - sudo apt-get install -y libsqlite3-dev wget  # Install necessary libraries
+  - wget https://www.sqlite.org/2020/sqlite-autoconf-3330000.tar.gz  # Download SQLite source code
   - tar xzf sqlite-autoconf-3330000.tar.gz
   - cd sqlite-autoconf-3330000
-  - ./configure
+  - ./configure --prefix=/usr/local
   - make
   - sudo make install
-  - sqlite3 --version  # Check that the correct version is installed
   - cd ..
+  - sqlite3 --version  # Check if the new version is installed correctly
+
+# Ensure the new SQLite is recognized
+before_script:
+  - export LD_LIBRARY_PATH="/usr/local/lib"  # Ensure correct linking
+  - export PATH="/usr/local/bin:$PATH"  # Ensure the correct SQLite version is used
+  - sqlite3 --version  # Verify that the correct version is in use
 
 # Install Python dependencies
 install:
   - pip install -U pip
   - pip install -r requirements.txt
 
-# Set up the environment and run migrations
-before_script:
-  - python manage.py migrate  # Apply migrations for testing
-
-# Run tests
+# Apply migrations and run tests
 script:
-  - pytest  # Run tests using pytest
-
-# Optionally cache pip dependencies to speed up builds
-cache:
-  pip: true
+  - python manage.py migrate  # Apply migrations
+  - pytest  # Run tests
